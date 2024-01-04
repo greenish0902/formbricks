@@ -12,6 +12,7 @@ export const ZSurveyThankYouCard = z.object({
 export enum TSurveyQuestionType {
   FileUpload = "fileUpload",
   OpenText = "openText",
+  OpenMultipleText = "openMultipleText",
   MultipleChoiceSingle = "multipleChoiceSingle",
   MultipleChoiceMulti = "multipleChoiceMulti",
   NPS = "nps",
@@ -151,6 +152,11 @@ export const ZSurveyOpenTextLogic = ZSurveyLogicBase.extend({
   value: z.undefined(),
 });
 
+export const ZSurveyOpenMultipleTextLogic = ZSurveyLogicBase.extend({
+  condition: z.enum(["submitted", "skipped"]).optional(),
+  value: z.undefined(),
+});
+
 export const ZSurveyConsentLogic = ZSurveyLogicBase.extend({
   condition: z.enum(["skipped", "accepted"]).optional(),
   value: z.undefined(),
@@ -216,6 +222,7 @@ const ZSurveyCalLogic = ZSurveyLogicBase.extend({
 
 export const ZSurveyLogic = z.union([
   ZSurveyOpenTextLogic,
+  ZSurveyOpenMultipleTextLogic,
   ZSurveyConsentLogic,
   ZSurveyMultipleChoiceSingleLogic,
   ZSurveyMultipleChoiceMultiLogic,
@@ -244,8 +251,24 @@ const ZSurveyQuestionBase = z.object({
   isDraft: z.boolean().optional(),
 });
 
-export const ZSurveyOpenTextQuestionInputType = z.enum(["text", "email", "url", "number", "phone"]);
+export const ZSurveyOpenTextQuestionInputType = z.enum([
+  "text",
+  "email",
+  "url",
+  "number",
+  "phone",
+  "password",
+]);
 export type TSurveyOpenTextQuestionInputType = z.infer<typeof ZSurveyOpenTextQuestionInputType>;
+
+export const ZSurveyInputSet = z.object({
+  id: z.string(),
+  subheader: z.string(),
+  placeholder: z.string().optional(),
+  longAnswer: z.boolean().optional(),
+  inputType: ZSurveyOpenTextQuestionInputType.optional().default("text"),
+});
+export type TSurveyInputSet = z.infer<typeof ZSurveyInputSet>;
 
 export const ZSurveyOpenTextQuestion = ZSurveyQuestionBase.extend({
   type: z.literal(TSurveyQuestionType.OpenText),
@@ -256,6 +279,14 @@ export const ZSurveyOpenTextQuestion = ZSurveyQuestionBase.extend({
 });
 
 export type TSurveyOpenTextQuestion = z.infer<typeof ZSurveyOpenTextQuestion>;
+
+export const ZSurveyOpenMultipleTextQuestion = ZSurveyQuestionBase.extend({
+  type: z.literal(TSurveyQuestionType.OpenMultipleText),
+  logic: z.array(ZSurveyOpenMultipleTextLogic).optional(),
+  inputSets: z.array(ZSurveyInputSet),
+});
+
+export type TSurveyOpenMultipleTextQuestion = z.infer<typeof ZSurveyOpenMultipleTextQuestion>;
 
 export const ZSurveyConsentQuestion = ZSurveyQuestionBase.extend({
   type: z.literal(TSurveyQuestionType.Consent),
@@ -365,6 +396,7 @@ export type TSurveyCalQuestion = z.infer<typeof ZSurveyCalQuestion>;
 
 export const ZSurveyQuestion = z.union([
   ZSurveyOpenTextQuestion,
+  ZSurveyOpenMultipleTextQuestion,
   ZSurveyConsentQuestion,
   ZSurveyMultipleChoiceSingleQuestion,
   ZSurveyMultipleChoiceMultiQuestion,
@@ -464,6 +496,7 @@ export type TSurveyInput = z.infer<typeof ZSurveyInput>;
 export const ZSurveyTSurveyQuestionType = z.union([
   z.literal("fileUpload"),
   z.literal("openText"),
+  z.literal("openMultipleText"),
   z.literal("multipleChoiceSingle"),
   z.literal("multipleChoiceMulti"),
   z.literal("nps"),

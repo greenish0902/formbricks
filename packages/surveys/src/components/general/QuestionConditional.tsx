@@ -6,6 +6,7 @@ import FileUploadQuestion from "@/components/questions/FileUploadQuestion";
 import MultipleChoiceMultiQuestion from "@/components/questions/MultipleChoiceMultiQuestion";
 import MultipleChoiceSingleQuestion from "@/components/questions/MultipleChoiceSingleQuestion";
 import NPSQuestion from "@/components/questions/NPSQuestion";
+import OpenMultipleTextQuestion from "@/components/questions/OpenMultipleTextQuestion";
 import OpenTextQuestion from "@/components/questions/OpenTextQuestion";
 import PictureSelectionQuestion from "@/components/questions/PictureSelectionQuestion";
 import RatingQuestion from "@/components/questions/RatingQuestion";
@@ -55,6 +56,17 @@ export default function QuestionConditional({
       autoFocus={autoFocus}
       ttc={ttc}
       setTtc={setTtc}
+    />
+  ) : question.type === TSurveyQuestionType.OpenMultipleText ? (
+    <OpenMultipleTextQuestion
+      question={question}
+      value={value as string[]}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      onBack={onBack}
+      isFirstQuestion={isFirstQuestion}
+      isLastQuestion={isLastQuestion}
+      // brandColor={brandColor}
     />
   ) : question.type === TSurveyQuestionType.MultipleChoiceSingle ? (
     <MultipleChoiceSingleQuestion

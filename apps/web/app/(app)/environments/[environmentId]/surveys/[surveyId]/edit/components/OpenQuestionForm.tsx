@@ -27,6 +27,7 @@ const questionTypes = [
   { value: "url", label: "URL", icon: <LinkIcon /> },
   { value: "number", label: "Number", icon: <HashtagIcon /> },
   { value: "phone", label: "Phone", icon: <PhoneIcon /> },
+  { value: "password", label: "비밀번호" },
 ];
 
 interface OpenQuestionFormProps {

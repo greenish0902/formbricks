@@ -2,6 +2,7 @@
 
 import AdvancedSettings from "@/app/(app)/environments/[environmentId]/surveys/[surveyId]/edit/components/AdvancedSettings";
 import DateQuestionForm from "@/app/(app)/environments/[environmentId]/surveys/[surveyId]/edit/components/DateQuestionForm";
+import OpenMultipleTextQuestionForm from "@/app/(app)/environments/[environmentId]/surveys/[surveyId]/edit/components/OpenMultipleTextQuestionForm";
 import PictureSelectionForm from "@/app/(app)/environments/[environmentId]/surveys/[surveyId]/edit/components/PictureSelectionForm";
 import { getTSurveyQuestionTypeName } from "@/app/lib/questions";
 import {
@@ -184,6 +185,15 @@ export default function QuestionCard({
             <Collapsible.CollapsibleContent className="px-4 pb-4">
               {question.type === TSurveyQuestionType.OpenText ? (
                 <OpenQuestionForm
+                  localSurvey={localSurvey}
+                  question={question}
+                  questionIdx={questionIdx}
+                  updateQuestion={updateQuestion}
+                  lastQuestion={lastQuestion}
+                  isInValid={isInValid}
+                />
+              ) : question.type === TSurveyQuestionType.OpenMultipleText ? (
+                <OpenMultipleTextQuestionForm
                   localSurvey={localSurvey}
                   question={question}
                   questionIdx={questionIdx}

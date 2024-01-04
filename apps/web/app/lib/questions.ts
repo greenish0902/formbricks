@@ -2,6 +2,7 @@ import {
   ArrowUpTrayIcon,
   CalendarDaysIcon,
   ChatBubbleBottomCenterTextIcon,
+  ChatBubbleLeftRightIcon,
   CheckIcon,
   CursorArrowRippleIcon,
   ListBulletIcon,
@@ -36,6 +37,29 @@ export const questionTypes: TSurveyQuestionType[] = [
       subheader: "Who? Who? Who?",
       placeholder: "Type your answer here...",
       longAnswer: true,
+    },
+  },
+  {
+    id: QuestionId.OpenMultipleText,
+    label: "Free multiple text",
+    description: "Multiple lines of text",
+    icon: ChatBubbleLeftRightIcon,
+    preset: {
+      headline: "Example Open Multiple Text",
+      inputSets: [
+        {
+          headline: "First headline",
+          subheader: "First subheader",
+          placeholder: "Type your answer here...",
+          longAnswer: true,
+        },
+        {
+          headline: "Second headline",
+          subheader: "Second subheader",
+          placeholder: "Type your answer here...",
+          longAnswer: true,
+        },
+      ],
     },
   },
   {
